@@ -1,26 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { getCsrfToken, getSession, signIn, useSession } from "next-auth/react";
-import { useRef } from "react";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const emailInput = useRef<HTMLInputElement>(null);
-  const passwordInput = useRef<HTMLInputElement>(null);
-  const { data, status } = useSession();
-
-  const onSubmit = async () => {
-    const singIn = await signIn("credentials", {
-      redirect: false,
-      password: passwordInput.current ? passwordInput.current.value : "",
-      username: emailInput.current ? emailInput.current.value : "",
-    });
-
-    console.log("sign in", singIn);
-    console.log("data", data);
-    console.log("status", status);
-
-  };
-
   return (
     <>
       <Head>
@@ -29,33 +11,37 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="drawer">
-        <div className="container bg-base-100  h-full w-full mx-auto flex align-center justify-center">
-          <div className="my-auto card bg-neutral-content  shadow-xl">
-            <div className="card w-96 w-96 p-10 shadow-xl">
-              <input
-                ref={emailInput}
-                type="text"
-                className="input w-full max-w-xs block mb-3"
-                placeholder="username"
-              />
+      <ul>
+        <li>
+          <Link
+            href={{
+              pathname: "/login",
+            }}
+          >
+            <a>Login</a>
+          </Link>
+        </li>
 
-              <input
-                ref={passwordInput}
-                type="text"
-                className="input w-full max-w-xs block mb-3"
-                placeholder="password"
-              />
+        <li>
+          <Link
+            href={{
+              pathname: "/register",
+            }}
+          >
+            <a>Register</a>
+          </Link>
+        </li>
 
-              <div className="w-full flex justify-end">
-                <button onClick={onSubmit} className="btn">
-                  Login
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <li>
+          <Link
+            href={{
+              pathname: "/dashboard",
+            }}
+          >
+            <a>dashboard</a>
+          </Link>
+        </li>
+      </ul>
     </>
   );
 };
