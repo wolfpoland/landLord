@@ -22,7 +22,7 @@ export default function Navbar() {
             pathname: "/",
           }}
         >
-          <a className="btn btn-ghost normal-case text-xl">Land lord</a>
+          <span className="btn btn-ghost normal-case text-xl">Land lord</span>
         </Link>
       </div>
 
@@ -37,7 +37,7 @@ export default function Navbar() {
                   pathname: "/login",
                 }}
               >
-                <a>Login</a>
+                <span>Login</span>
               </Link>
             )}
           </li>

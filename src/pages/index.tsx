@@ -18,7 +18,7 @@ const Home: NextPage = () => {
               pathname: "/login",
             }}
           >
-            <a>Login</a>
+            <span>Login</span>
           </Link>
         </li>
 
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
               pathname: "/register",
             }}
           >
-            <a>Register</a>
+            <span>Register</span>
           </Link>
         </li>
 
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
               pathname: "/dashboard",
             }}
           >
-            <a>dashboard</a>
+            <span>dashboard</span>
           </Link>
         </li>
       </ul>

@@ -5,7 +5,7 @@ import { trpc } from "../../utils/trpc";
 const Register: NextPage = () => {
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const register = trpc.useMutation("authorize.register");
+  const register = trpc.authorize.register.useMutation();
 
   const onSubmit = async () => {
     if (!emailInput.current?.value || !passwordInput.current?.value) {

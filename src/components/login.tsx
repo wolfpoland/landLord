@@ -27,30 +27,26 @@ export default function LoginCard() {
           ref={emailInput}
           type="text"
           className="input w-full max-w-xs block mb-3"
-          placeholder="username"
-        />
+          placeholder="username"/>
 
         <input
           ref={passwordInput}
           type="text"
           className="input w-full max-w-xs block mb-3"
-          placeholder="password"
-        />
+          placeholder="password"/>
 
         <Link
           href={{
             pathname: "/register",
-          }}
-        >
-          <a className="text-left">No account ? Register now</a>
+          }}>
+          <span className="text-left">No account ? Register now</span>
         </Link>
 
         <Link
           href={{
             pathname: "/",
-          }}
-        >
-          <a className="text-left">Forgot password</a>
+          }}>
+          <span className="text-left">Forgot password</span>
         </Link>
 
         <div className="w-full flex justify-end">
