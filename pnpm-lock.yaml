@@ -6,6 +6,7 @@ specifiers:
   '@radix-ui/react-popover': 1.0.2
   '@radix-ui/react-tooltip': ^1.0.2
   '@tanstack/react-query': ^4.16.0
+  '@tanstack/react-table': ^8.7.3
   '@trivago/prettier-plugin-sort-imports': ^4.0.0
   '@trpc/client': ^10.2.0
   '@trpc/next': ^10.2.0
@@ -43,6 +44,7 @@ dependencies:
   '@radix-ui/react-popover': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-tooltip': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@tanstack/react-query': 4.17.1_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-table': 8.7.3_biqbaboplfbrettd7655fr4n2y
   '@trpc/client': 10.2.0_@trpc+server@10.2.0
   '@trpc/next': 10.2.0_dfo4zyd5puickhsctwfhhecacy
   '@trpc/react': 9.27.4_hi5ewusvtqwjzt5m3cvz7jz7ym
@@ -963,6 +965,23 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/react-table/8.7.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-4hUSl10UGEp3DTS0sKe8ZEr0MYKEHXKXzAolzjs+w+vjVIimFICuyIjxisY6rLOvRVNXbwF5Pjyr+1YC6ptpZw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.7.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/table-core/8.7.3:
+    resolution: {integrity: sha512-P+LKZuytLRUEKv0zMKFpYCLb9ZRiZ+kaFXh99HS6gOEX58tq41PltQ2BhTBe2UPlB8O6IQFsilKhx94/6w3ZMg==}
+    engines: {node: '>=12'}
     dev: false
 
   /@trivago/prettier-plugin-sort-imports/4.0.0_prettier@2.8.0:

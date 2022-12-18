@@ -1,22 +1,18 @@
-import type { NextPage } from 'next';
-import { useEffect, useRef } from 'react';
-import { trpc } from '../../utils/trpc';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { trpc } from '../../../utils/trpc';
+
+import { useRef } from 'react';
+
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+} from 'next';
+import { getSession } from 'next-auth/react';
 
 const Apartment: NextPage = () => {
   const nameInput = useRef<HTMLInputElement>(null);
   const addressInput = useRef<HTMLInputElement>(null);
   const addApartment = trpc.apartment.addApartment.useMutation();
-
-  const { status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
-    }
-  }, [status]);
 
   const onSubmit = async () => {
     if (!nameInput.current?.value || !addressInput.current?.value) {
@@ -58,6 +54,27 @@ const Apartment: NextPage = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { id } = context.query;
+  const session = await getSession(context);
+  const apartment = trpc.apartment.getApartment.useQuery({ id: id as string });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session, apartment },
+  };
 };
 
 export default Apartment;

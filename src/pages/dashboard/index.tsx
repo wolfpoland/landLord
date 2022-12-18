@@ -1,37 +1,36 @@
 import { trpc } from '../../utils/trpc';
-
-import React, { useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import ApartmentList from './(components)/apartment-list';
 
+import React from 'react';
+
+import { NextPage } from 'next';
+import { GetSessionParams, getSession } from 'next-auth/react';
+
 const Dashboard: NextPage = () => {
-  const { status, data } = useSession();
-  const router = useRouter();
-  const [id, setId] = useState<string | undefined>(undefined);
-  const apartments = trpc.apartment.getApartment.useQuery({ id });
-
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
-    }
-
-    if (data?.user) {
-      setId(data.user.id);
-    }
-  }, [status]);
+  const apartments = trpc.apartment.getApartments.useQuery();
 
   if (apartments.data) {
     return <ApartmentList apartments={apartments.data} />;
   } else {
     return null;
   }
-
 };
 
-function getServerSideProps () {
+export async function getServerSideProps(context: GetSessionParams) {
+  const session = await getSession(context);
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 }
 
 export default Dashboard;

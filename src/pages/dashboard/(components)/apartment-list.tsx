@@ -26,7 +26,7 @@ export default function ApartmentList(props: ApartmentListProps) {
     </Link>
   );
 
-  const onKeyPress = (text: string) => {
+  const onInputChange = (text: string) => {
     const filteredApartments = filterApartments(text);
 
     if (filteredApartments.length > 0) {
@@ -69,7 +69,7 @@ export default function ApartmentList(props: ApartmentListProps) {
   }, [apartments]);
 
   return (
-    <List onInputChange={onKeyPress} header={header} title="Apartment list">
+    <List onInputChange={onInputChange} header={header} title="Apartment list">
       {items}
     </List>
   );

@@ -1,6 +1,7 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
+import type { NextPage } from 'next';
+import { GetSessionParams, getSession } from 'next-auth/react';
+import Head from 'next/head';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   return (
@@ -15,9 +16,8 @@ const Home: NextPage = () => {
         <li>
           <Link
             href={{
-              pathname: "/login",
-            }}
-          >
+              pathname: '/login',
+            }}>
             <span>Login</span>
           </Link>
         </li>
@@ -25,9 +25,8 @@ const Home: NextPage = () => {
         <li>
           <Link
             href={{
-              pathname: "/register",
-            }}
-          >
+              pathname: '/register',
+            }}>
             <span>Register</span>
           </Link>
         </li>
@@ -35,9 +34,8 @@ const Home: NextPage = () => {
         <li>
           <Link
             href={{
-              pathname: "/dashboard",
-            }}
-          >
+              pathname: '/dashboard',
+            }}>
             <span>dashboard</span>
           </Link>
         </li>
@@ -45,5 +43,22 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context: GetSessionParams) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+}
 
 export default Home;
