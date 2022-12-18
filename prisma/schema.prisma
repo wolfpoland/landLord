@@ -48,6 +48,8 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  owner         Owner?
+  maintainer    Maintainer?
   accounts      Account[]
   sessions      Session[]
 }
@@ -60,3 +62,38 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Owner {
+    id String @id @default(cuid())
+    userId       String @unique
+    aprartemt Apartment[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+    deleted Boolean @default(false)
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Maintainer {
+    id String @id @default(cuid())
+    userId       String @unique
+    apartemnt Apartment[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+    deleted Boolean @default(false)
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Apartment {
+    id String @id @default(cuid())
+    ownerId       String
+    maintainerId       String? @unique
+    address   String
+    name   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    deletedAt DateTime?
+    deleted Boolean @default(false)
+    owner         Owner     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    maintainer    Maintainer? @relation(fields: [maintainerId], references: [id], onDelete: Cascade)
+}

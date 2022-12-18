@@ -1,31 +1,37 @@
-import { NextPage } from "next";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import List from "../../components/list";
-import ListItem from "../../components/list-item";
+import { trpc } from '../../utils/trpc';
+
+import React, { useEffect, useState } from 'react';
+import { NextPage } from 'next';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import ApartmentList from './(components)/apartment-list';
 
 const Dashboard: NextPage = () => {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
+  const [id, setId] = useState<string | undefined>(undefined);
+  const apartments = trpc.apartment.getApartment.useQuery({ id });
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+
+    if (data?.user) {
+      setId(data.user.id);
     }
   }, [status]);
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
+  if (apartments.data) {
+    return <ApartmentList apartments={apartments.data} />;
+  } else {
+    return null;
+  }
 
-      <List title="Apartment list">
-        <ListItem key="1">
-          <span>Apartment 1</span>
-        </ListItem>
-      </List>
-    </div>
-  );
 };
+
+function getServerSideProps () {
+
+}
 
 export default Dashboard;
