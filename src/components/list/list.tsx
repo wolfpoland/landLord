@@ -25,7 +25,7 @@ export default function List(props: ListProps) {
   }
 
   return (
-    <div className="w-96 mx-2">
+    <div className="w-96 mx-2 bg-neutral p-3 rounded-md shadow-xl">
       <div className="border-b-2 p-1 flex items-center justify-between">
         <span className="mx-1.5">{title}</span>
 

@@ -8,12 +8,22 @@ import { GetSessionParams, getSession } from 'next-auth/react';
 
 const Dashboard: NextPage = () => {
   const apartments = trpc.apartment.getApartments.useQuery();
+  let apartmentElement;
 
   if (apartments.data) {
-    return <ApartmentList apartments={apartments.data} />;
+    apartmentElement = <ApartmentList apartments={apartments.data} />;
   } else {
-    return null;
+    return <p>No apartments</p>;
   }
+
+  return (
+    <div className="">
+      <div className="width-100 mb-1 p-5">
+        <button className="btn btn-sm">Add new rent</button>
+      </div>
+      <div className="bg-primary-content py-5">{apartmentElement}</div>
+    </div>
+  );
 };
 
 export async function getServerSideProps(context: GetSessionParams) {

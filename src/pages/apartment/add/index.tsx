@@ -1,3 +1,4 @@
+import CardPage from '../../../components/card-page';
 import { trpc } from '../../../utils/trpc';
 
 import { useRef } from 'react';
@@ -26,42 +27,34 @@ const Apartment: NextPage = () => {
   };
 
   return (
-    <div className="container bg-base-100 w-full mx-auto flex align-center justify-center">
-      <div className="my-5 w-full h-fit card bg-neutral-content shadow-xl">
-        <div className="card-body">
-          <h1 className="card-title text-3xl mb-10">Add apartment</h1>
+    <CardPage title="Add apartment">
+      <input
+        ref={nameInput}
+        type="text"
+        className="input w-full max-w-xs block mb-3"
+        placeholder="name"
+      />
 
-          <input
-            ref={nameInput}
-            type="text"
-            className="input w-full max-w-xs block mb-3"
-            placeholder="name"
-          />
+      <input
+        ref={addressInput}
+        type="text"
+        className="input w-full max-w-xs block mb-3"
+        placeholder="address"
+      />
 
-          <input
-            ref={addressInput}
-            type="text"
-            className="input w-full max-w-xs block mb-3"
-            placeholder="address"
-          />
-
-          <div className="w-full flex justify-end">
-            <button onClick={onSubmit} className="btn">
-              Add
-            </button>
-          </div>
-        </div>
+      <div className="w-full flex justify-end">
+        <button onClick={onSubmit} className="btn">
+          Add
+        </button>
       </div>
-    </div>
+    </CardPage>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { id } = context.query;
   const session = await getSession(context);
-  const apartment = trpc.apartment.getApartment.useQuery({ id: id as string });
 
   if (!session) {
     return {
@@ -73,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   return {
-    props: { session, apartment },
+    props: { session },
   };
 };
 

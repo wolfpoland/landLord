@@ -1,4 +1,5 @@
-import Details, { DetailItem } from '../../components/list/details';
+import CardPage from '../../components/card-page';
+import Details, { DetailItem } from '../../components/details';
 import {
   GetUniqueApartmentTuple,
   getUniqueApartment,
@@ -37,19 +38,10 @@ const ApartmentDetails: NextPage<ApartmentProps> = (props: ApartmentProps) => {
   ];
 
   return (
-    <div className="container bg-base-100 w-full mx-auto flex align-center justify-center">
-      <div className="my-5 w-full h-fit card bg-neutral-content shadow-xl">
-        <div className="card-body">
-          <h1 className="card-title text-3xl mb-10">Details</h1>
-
-          <Details
-            title="Apartment Details"
-            detailItems={apartmentsDetailItems}
-          />
-          <Details title="Owner" detailItems={ownerItemsDetails} />
-        </div>
-      </div>
-    </div>
+    <CardPage title="Details">
+      <Details title="Apartment Details" detailItems={apartmentsDetailItems} />
+      <Details title="Owner" detailItems={ownerItemsDetails} />
+    </CardPage>
   );
 };
 

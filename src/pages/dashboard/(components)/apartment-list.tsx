@@ -20,7 +20,7 @@ export default function ApartmentList(props: ApartmentListProps) {
   const header = (
     <Link
       href={{
-        pathname: '/apartment',
+        pathname: '/apartment/add',
       }}>
       <RxPlus className="w-4 h-4 inline-block hover:text-primary-focus" />
     </Link>
