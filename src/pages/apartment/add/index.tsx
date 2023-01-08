@@ -1,7 +1,10 @@
 import CardPage from '../../../components/card-page';
+import Form from '../../../components/form/form';
+import FormInput from '../../../components/form/form-input';
+import GridColsTwo from '../../../components/layout/grid-cols-two';
 import { trpc } from '../../../utils/trpc';
 
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 import type {
   GetServerSideProps,
@@ -28,19 +31,12 @@ const Apartment: NextPage = () => {
 
   return (
     <CardPage title="Add apartment">
-      <input
-        ref={nameInput}
-        type="text"
-        className="input w-full max-w-xs block mb-3"
-        placeholder="name"
-      />
-
-      <input
-        ref={addressInput}
-        type="text"
-        className="input w-full max-w-xs block mb-3"
-        placeholder="address"
-      />
+      <Form>
+        <GridColsTwo>
+          <FormInput forwardRef={nameInput} fromControlName="Name" />
+          <FormInput forwardRef={addressInput} fromControlName="Addres" />
+        </GridColsTwo>
+      </Form>
 
       <div className="w-full flex justify-end">
         <button onClick={onSubmit} className="btn">

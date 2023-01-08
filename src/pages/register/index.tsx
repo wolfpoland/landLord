@@ -1,11 +1,17 @@
-import type { NextPage } from "next";
-import { useRef } from "react";
-import { trpc } from "../../utils/trpc";
+import CardPage from '../../components/card-page';
+import Form from '../../components/form/form';
+import FormInput from '../../components/form/form-input';
+import GridColsTwo from '../../components/layout/grid-cols-two';
+import { trpc } from '../../utils/trpc';
+
+import React, { useRef } from 'react';
+
+import type { NextPage } from 'next';
 
 const Register: NextPage = () => {
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const register = trpc.authorize.register.useMutation();
+  const register = trpc.register.register.useMutation();
 
   const onSubmit = async () => {
     if (!emailInput.current?.value || !passwordInput.current?.value) {
@@ -19,33 +25,20 @@ const Register: NextPage = () => {
   };
 
   return (
-    <div className="container bg-base-100 w-full mx-auto flex align-center justify-center">
-      <div className="my-5 w-full h-fit card bg-neutral-content shadow-xl">
-        <div className="card-body">
-          <h1 className="card-title text-3xl mb-10">Register user</h1>
+    <CardPage title="Register">
+      <Form title="">
+        <GridColsTwo>
+          <FormInput forwardRef={emailInput} fromControlName="Email" />
+          <FormInput forwardRef={passwordInput} fromControlName="Password" />
+        </GridColsTwo>
+      </Form>
 
-          <input
-            ref={emailInput}
-            type="text"
-            className="input w-full max-w-xs block mb-3"
-            placeholder="username"
-          />
-
-          <input
-            ref={passwordInput}
-            type="text"
-            className="input w-full max-w-xs block mb-3"
-            placeholder="password"
-          />
-
-          <div className="w-full flex justify-end">
-            <button onClick={onSubmit} className="btn">
-              Register
-            </button>
-          </div>
-        </div>
+      <div className="w-full flex justify-end mt-10 pr-5">
+        <button onClick={onSubmit} className="btn">
+          Register
+        </button>
       </div>
-    </div>
+    </CardPage>
   );
 };
 

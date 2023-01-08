@@ -5,23 +5,24 @@ import React from 'react';
 
 import { NextPage } from 'next';
 import { GetSessionParams, getSession } from 'next-auth/react';
+import Link from 'next/link';
 
 const Dashboard: NextPage = () => {
   const apartments = trpc.apartment.getApartments.useQuery();
-  let apartmentElement;
-
-  if (apartments.data) {
-    apartmentElement = <ApartmentList apartments={apartments.data} />;
-  } else {
-    return <p>No apartments</p>;
-  }
 
   return (
     <div className="">
       <div className="width-100 mb-1 p-5">
-        <button className="btn btn-sm">Add new rent</button>
+        <Link
+          href={{
+            pathname: '/rent',
+          }}>
+          <button className="btn btn-sm">Add new rent</button>
+        </Link>
       </div>
-      <div className="bg-primary-content py-5">{apartmentElement}</div>
+      <div className="bg-primary-content py-5">
+        <ApartmentList apartments={apartments.data} />
+      </div>
     </div>
   );
 };

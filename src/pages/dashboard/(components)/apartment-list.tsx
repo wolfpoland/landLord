@@ -1,4 +1,5 @@
 import List from '../../../components/list/list';
+import { apartment } from '../../../server/trpc/router/apartment';
 import ApartmentItem from './apartment-item';
 
 import React, { useEffect, useState } from 'react';
@@ -8,7 +9,7 @@ import { Apartment } from '@prisma/client';
 import Link from 'next/link';
 
 type ApartmentListProps = {
-  apartments: Array<Apartment>;
+  apartments?: Array<Apartment>;
 };
 
 export default function ApartmentList(props: ApartmentListProps) {
@@ -34,7 +35,7 @@ export default function ApartmentList(props: ApartmentListProps) {
 
       setItems(filteredItems);
     } else {
-      const items = apartments.map(transformApartmentToItem);
+      const items = apartments?.map(transformApartmentToItem) || [];
 
       setItems(items);
     }
@@ -42,6 +43,10 @@ export default function ApartmentList(props: ApartmentListProps) {
 
   const filterApartments = (text: string) => {
     const filteredApartments: Array<Apartment> = [];
+
+    if (!apartments) {
+      return filteredApartments;
+    }
 
     for (let n = 0; n < apartments.length; n++) {
       const apartment = apartments[n];
