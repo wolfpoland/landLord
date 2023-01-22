@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   FloatingPortal,
@@ -17,10 +17,13 @@ export type FormComboboxProps = {
   label?: string;
   forwardRef?: React.RefObject<HTMLInputElement>;
   items: FormComboboxItem[];
+  onComboboxChange?: (query: string) => void;
+  onComboBoxOptionClick?: (id: string) => void;
 };
 
 export default function FormCombobox(props: FormComboboxProps) {
-  const { label, forwardRef, items } = props;
+  const { label, forwardRef, items, onComboboxChange, onComboBoxOptionClick } =
+    props;
   const [open, setOpen] = useState(true);
   const [query, setQuery] = useState('');
 
@@ -40,7 +43,7 @@ export default function FormCombobox(props: FormComboboxProps) {
         });
 
   return (
-    <Combobox>
+    <Combobox onChange={onComboboxChange}>
       <div className="form-control w-full max-w-md">
         <label className="label">
           <span className="label-text">{label}</span>
@@ -68,6 +71,9 @@ export default function FormCombobox(props: FormComboboxProps) {
           className="max-w-md w-full rounded-md bg-base-100 text-base shadow-lg">
           {filteredItems.map((item: FormComboboxItem) => (
             <Combobox.Option
+              onClick={() =>
+                onComboBoxOptionClick && onComboBoxOptionClick(item.key)
+              }
               className="cursor-default select-none py-2 pl-5 pr-4 hover:bg-primary-focus"
               key={item.key}
               value={item.value}>

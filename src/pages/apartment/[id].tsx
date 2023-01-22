@@ -25,7 +25,18 @@ const ApartmentDetails: NextPage<ApartmentProps> = (props: ApartmentProps) => {
 
   const apartmentsDetailItems: Array<DetailItem> = [
     { value: apartment.name, label: 'Name' },
-    { value: apartment.address, label: 'Address' },
+    { value: apartment.state || '', label: 'State' },
+    { value: apartment.city || '', label: 'City' },
+    { value: apartment.street || '', label: 'Street' },
+    { value: apartment.buildingNumber || '', label: 'Building number' },
+    { value: apartment.apartmentNumber || '', label: 'Apartment number' },
+    { value: apartment.postalCode || '', label: 'Postal code' },
+    { value: apartment.notes || '', label: 'Description' },
+    {
+      value: apartment.numberOfTenants?.toString() || '',
+      label: 'Number of tenants',
+    },
+    { value: apartment.country || '', label: 'Country' },
     {
       value: `${createdAt.getDate()}/${createdAt.getMonth()}/${createdAt.getFullYear()}`,
       label: 'Created At',

@@ -78,19 +78,29 @@ model Maintainer {
 }
 
 model Apartment {
-  id           String      @id @default(cuid())
-  ownerId      String
-  maintainerId String?     @unique
-  address      String
-  name         String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @default(now()) @updatedAt
-  deletedAt    DateTime?
-  deleted      Boolean     @default(false)
-  maintainer   Maintainer? @relation(fields: [maintainerId], references: [id], onDelete: Cascade)
-  owner        Owner       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  Rent         Rent[]
-  Renter       Renter[]
+  id              String      @id @default(cuid())
+  ownerId         String
+  maintainerId    String?     @unique
+  address         String?
+  name            String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now()) @updatedAt
+  deletedAt       DateTime?
+  deleted         Boolean     @default(false)
+  apartmentNumber String?
+  buildingNumber  String?
+  city            String?
+  country         String?
+  notes           String?
+  numberOfTenants Int?
+  state           String?
+  street          String?
+  zip             String?
+  postalCode      String?
+  maintainer      Maintainer? @relation(fields: [maintainerId], references: [id], onDelete: Cascade)
+  owner           Owner       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  Rent            Rent[]
+  Renter          Renter[]
 }
 
 model Renter {

@@ -25,14 +25,11 @@ export default function Form(props: FormProps) {
   return (
     <div
       onClick={onFormClick}
-      className={`
-            ${
-              !collapsable || (collapsable && detailsOpen)
-                ? 'collapse-open'
-                : ''
-            }
-            ${collapsable ? 'collapse-arrow' : ''}
-             collapse border border-base-300 bg-base-100 rounded-box`}>
+      className={`${
+        !collapsable || (collapsable && detailsOpen) ? 'collapse-open ' : ''
+      }${
+        collapsable ? 'collapse-arrow ' : ''
+      }collapse border border-base-300 bg-base-100 rounded-box`}>
       {titleElm}
       <div className="collapse-content bg-primary-content">{children}</div>
     </div>

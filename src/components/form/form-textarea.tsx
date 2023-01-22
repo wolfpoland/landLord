@@ -25,7 +25,10 @@ export default function FormTextArea(props: FormTextAreaProps) {
       <label className="label">
         <span className="label-text">{label}</span>
       </label>
-      <textarea className="textarea textarea-bordered"></textarea>
+      <textarea
+        onClick={(event) => event.stopPropagation()}
+        ref={forwardRef}
+        className="textarea textarea-bordered"></textarea>
       <label className="label">
         <span className="label-text-alt">Alt label</span>
       </label>

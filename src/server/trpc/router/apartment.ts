@@ -7,7 +7,20 @@ import { z } from 'zod';
 
 export const apartment = router({
   addApartment: protectedProcedure
-    .input(z.object({ name: z.string(), address: z.string() }))
+    .input(
+      z.object({
+        name: z.string(),
+        state: z.string(),
+        city: z.string(),
+        street: z.string(),
+        buildingNumber: z.string(),
+        apartmentNumber: z.string(),
+        postalCode: z.string(),
+        numberOfTenants: z.number(),
+        country: z.string(),
+        description: z.string(),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       const { id } = ctx.session?.user;
       let owner: Owner | null = null;
@@ -63,8 +76,17 @@ export const apartment = router({
       return await ctx.prisma.apartment.create({
         data: {
           name: input.name,
-          address: input.address,
           ownerId: owner.id,
+          state: input.state,
+          city: input.city,
+          address: '',
+          street: input.street,
+          buildingNumber: input.buildingNumber,
+          apartmentNumber: input.apartmentNumber,
+          postalCode: input.postalCode,
+          numberOfTenants: input.numberOfTenants,
+          country: input.country,
+          notes: input.description,
         },
       });
     }),

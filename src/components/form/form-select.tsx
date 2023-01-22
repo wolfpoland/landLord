@@ -17,10 +17,11 @@ export type FormSelectProps = {
   label?: string;
   forwardRef?: React.RefObject<HTMLInputElement>;
   items: FormSelectItem[];
+  onSelectChange?: (value: string) => void;
 };
 
 export default function FormSelect(props: FormSelectProps) {
-  const { label, forwardRef, items } = props;
+  const { label, forwardRef, items, onSelectChange } = props;
   const [selected, setSelected] = useState<string | null>(null);
   const [open, setOpen] = useState(true);
 
@@ -32,8 +33,13 @@ export default function FormSelect(props: FormSelectProps) {
     middleware: [offset(10)],
   });
 
+  const onListboxChange = (value: string) => {
+    setSelected(value);
+    onSelectChange && onSelectChange(value);
+  };
+
   return (
-    <Listbox value={selected} onChange={setSelected}>
+    <Listbox value={selected} onChange={onListboxChange}>
       <div className="form-control w-full w-40">
         <label className="label">
           <span className="label-text">{label}</span>

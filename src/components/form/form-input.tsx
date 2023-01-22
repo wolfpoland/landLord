@@ -16,6 +16,7 @@ export default function FormInput(props: FormControlProps) {
       </label>
       <input
         ref={forwardRef}
+        onClick={(event) => event.stopPropagation()}
         type="text"
         placeholder="Type here"
         className="input input-bordered w-full max-w-md"

@@ -5,13 +5,11 @@ import FormCombobox, {
 } from '../../components/form/form-combobox';
 import FormInput from '../../components/form/form-input';
 import FormSelect, { FormSelectItem } from '../../components/form/form-select';
-import FormTextArea from '../../components/form/form-textarea';
-import Center from '../../components/layout/center';
 import GridColsTwo from '../../components/layout/grid-cols-two';
 import { trpc } from '../../utils/trpc';
 import TenantPersonal from './(components)/tenant-personal';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 
 import { Apartment } from '@prisma/client';
 import type {
@@ -26,6 +24,10 @@ const Rent: NextPage = () => {
     FormComboboxItem[]
   >([]);
   const numberOfTenants = useRef<HTMLInputElement>(null);
+  const [tenantElements, setTenantsElements] = useState<Array<ReactElement>>(
+    []
+  );
+  const [selectItems, setSelectItems] = useState<FormSelectItem[]>([]);
   const apartments = trpc.apartment.getApartments.useQuery();
 
   useEffect(() => {
@@ -43,23 +45,66 @@ const Rent: NextPage = () => {
     );
   }, [apartments.status]);
 
-  const items: FormSelectItem[] = [
-    { value: 'odin', key: '1' },
-    { value: '2', key: '2' },
-    { value: '3', key: '3' },
-  ];
+  const onComboboxOptionClick = (id: string) => {
+    const apartment = apartments?.data?.find(
+      (apartment) => apartment.id === id
+    );
+
+    if (!apartment || !apartment?.numberOfTenants) {
+      return;
+    }
+
+    const array = Array(apartment.numberOfTenants)
+      .fill(0)
+      .map((_, index) => {
+        return {
+          value: (index + 1).toString(),
+          key: (index + 1).toString(),
+        };
+      });
+
+    setSelectItems(array);
+  };
+
+  const onSelectChange = (value: string) => {
+    const paredQuery: number = parseInt(value);
+
+    if (isNaN(paredQuery)) {
+      return;
+    }
+
+    setTenantsElements(
+      Array(paredQuery)
+        .fill(null)
+        .map((_, index) => {
+          const title = `Tenant ${index + 1}`;
+
+          return (
+            <TenantPersonal key={index} title={title} collapsable={true} />
+          );
+        })
+    );
+  };
 
   return (
     <CardPage title="Add new Rent">
-      <Form title="Select Apartment">
+      <Form title="Apartment">
         <div className="py-5">
-          <Center>
-            <FormCombobox items={apartmentsForCombobox} label="Apartment" />
-          </Center>
+          <GridColsTwo>
+            <FormCombobox
+              items={apartmentsForCombobox}
+              onComboBoxOptionClick={onComboboxOptionClick}
+              label="Apartment"
+            />
+          </GridColsTwo>
         </div>
 
         <GridColsTwo>
-          <FormSelect items={items} label="Number of tenants" />
+          <FormSelect
+            onSelectChange={onSelectChange}
+            items={selectItems}
+            label="Number of tenants"
+          />
           <div className="flex">
             <FormInput
               className="mr-5"
@@ -74,12 +119,7 @@ const Rent: NextPage = () => {
         </GridColsTwo>
       </Form>
 
-      <TenantPersonal title="Tenant personal data" collapsable={false} />
-      <TenantPersonal
-        title="Another Tenant personal data"
-        collapsable={true}
-        initialOpened={false}
-      />
+      <>{tenantElements}</>
     </CardPage>
   );
 };
