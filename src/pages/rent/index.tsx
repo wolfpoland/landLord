@@ -3,6 +3,7 @@ import Form from '../../components/form/form';
 import FormCombobox, {
   FormComboboxItem,
 } from '../../components/form/form-combobox';
+import FormDatepickerInput from '../../components/form/form-datepicker-input';
 import FormInput from '../../components/form/form-input';
 import FormSelect, { FormSelectItem } from '../../components/form/form-select';
 import GridColsTwo from '../../components/layout/grid-cols-two';
@@ -105,13 +106,14 @@ const Rent: NextPage = () => {
             items={selectItems}
             label="Number of tenants"
           />
+
           <div className="flex">
-            <FormInput
+            <FormDatepickerInput
               className="mr-5"
               fromControlName="Start of rent"
               forwardRef={numberOfTenants}
             />
-            <FormInput
+            <FormDatepickerInput
               fromControlName="End of rent"
               forwardRef={numberOfTenants}
             />

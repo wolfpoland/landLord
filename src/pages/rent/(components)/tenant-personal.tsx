@@ -1,9 +1,11 @@
 import Form from '../../../components/form/form';
+import FormDatepickerInput from '../../../components/form/form-datepicker-input';
 import FormInput from '../../../components/form/form-input';
 import FormTextArea from '../../../components/form/form-textarea';
 import GridColsTwo from '../../../components/layout/grid-cols-two';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import Calendar from 'react-calendar';
 
 export type TenantPersonalProps = {
   title: string;
@@ -17,13 +19,17 @@ export default function TenantPersonal(props: TenantPersonalProps) {
   const surname = useRef<HTMLInputElement>(null);
   const email = useRef<HTMLInputElement>(null);
   const phoneNumber = useRef<HTMLInputElement>(null);
+  const [value, onChange] = useState(new Date());
 
   return (
     <Form title={title} collapsable={collapsable} initialOpened={initialOpened}>
       <GridColsTwo>
+        <FormInput forwardRef={email} fromControlName="Email" />
+      </GridColsTwo>
+
+      <GridColsTwo>
         <FormInput forwardRef={name} fromControlName="Name" />
         <FormInput forwardRef={surname} fromControlName="Surname" />
-        <FormInput forwardRef={email} fromControlName="Email" />
         <FormInput forwardRef={phoneNumber} fromControlName="Phone Number" />
         <FormInput forwardRef={name} fromControlName="Birthday" />
       </GridColsTwo>
@@ -40,8 +46,8 @@ export default function TenantPersonal(props: TenantPersonalProps) {
       <div className="divider">Rent Period</div>
 
       <GridColsTwo>
-        <FormInput forwardRef={name} fromControlName="Rent Start" />
-        <FormInput forwardRef={name} fromControlName="Rent End" />
+        <FormDatepickerInput fromControlName="Rent Start" forwardRef={name} />
+        <FormDatepickerInput fromControlName="Rent End" forwardRef={name} />
       </GridColsTwo>
 
       <div className="divider">Additional</div>

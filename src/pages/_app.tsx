@@ -1,10 +1,12 @@
-import { SessionProvider } from "next-auth/react";
-import type { AppType } from "next/dist/shared/lib/utils";
-import Layout from "./layout";
-import { trpc } from "../utils/trpc";
-import { Session } from "next-auth";
+import '../styles/globals.css';
+import { trpc } from '../utils/trpc';
+import Layout from './layout';
 
-import "../styles/globals.css";
+import 'react-date-picker/dist/DatePicker.css';
+
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import type { AppType } from 'next/dist/shared/lib/utils';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
